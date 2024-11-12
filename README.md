@@ -1,0 +1,2 @@
+# automod
+Advanced discord automod
