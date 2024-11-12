@@ -1,0 +1,20 @@
+{
+  "name": "skillissuefinder",
+  "version": "1.0.0",
+  "description": "Finds configurable words in images / gifs sent on discord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "bot": "node index.js "
+  },
+  "type": "commonjs",
+  "author": "Bolek Bondyra @ bolek.bondyra@protonmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5",
+    "js-levenshtein": "^1.1.6",
+    "run-func": "^3.0.0",
+    "tesseract.js": "^5.1.1"
+  }
+}
