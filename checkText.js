@@ -18,27 +18,29 @@ const checkText = (str, images, regex, text) => {
     if(str) {
         let words = str.match(/\b\w+\b/g)
         let returnValue = []
-        words.push(str.replace(/\s/g, ""))
-        // console.log(words)
-        words.forEach(word => {
-            console.log(word)
-            console.log(regex.toString())
-            returnValue.push(evaluateTextSimilarity(new TextCheckReturnObject(checkStringSimilarity(word, text), word.match(regex)), word))
-        });
-        return returnValue
+
+        if (words) {
+            words.push(str.replace(/\s/g, ""))
+            // console.log(words)
+            words.forEach(word => {
+                // console.log(word)
+                // console.log(regex.toString())
+                returnValue.push(evaluateTextSimilarity(new TextCheckReturnObject(checkStringSimilarity(word.replace(/[\u{0080}-\u{FFFF}]/gu,""), text), word.match(regex)), word))
+            });
+            return returnValue
+        }
     }
-    
 }
 
 const evaluateTextSimilarity = (returnObject) => {
-    console.log("for " + returnObject.word_debug)
-    console.log("levenshtein number: " + returnObject.lev_number+", returns:")
-    console.log(returnObject.lev_number < 3)
-    console.log("regex match: " + returnObject.regex_match)
-    if(returnObject.lev_number < 3 || returnObject.regex_match) //
+    // console.log("for " + returnObject.word_debug)
+    // console.log("regex match: " + returnObject.regex_match)
+    if(returnObject.lev_number < 3 || returnObject.regex_match) {
+        // console.log("returned true")
         return true
-    else
-        return false
+    }
+    else { return false }
+        
 }
 
 module.exports = { checkText }
