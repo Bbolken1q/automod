@@ -6,7 +6,7 @@ const bannedWords = [
 	"skill", "issue", "jeb", "kurwa", "szmat", "chuj", "pizd"
 ]
 const bannedRegexes = [
-	/.*kurw.*/i, /.*jeb.*/i, /.*szmat.*/i, /.*pizd.*/i, /.*chuj.*/i, /.*skill.*/i, /.*skil.*/i, /.*issue.*/i,  /.*isue.*/i, 
+	/.*kurw.*/i, /.*jeb.*/i, /.*szmat.*/i, /.*pizd.*/i, /.*chuj.*/i, /.*s{1,5}k{1,5}i{1,5}l{1,10}.*/i, /.*s{1,5}k{1,5}i{1,5}l{1,5}.*/i, /.*i{1,5}s{1,10}u{1,5}e{1,5}.*/i,  /.*i{1,5}s{1,5}u{1,5}e{1,5}.*/i,
 ]
 
 const evaluateArray = (arr) => {
@@ -19,10 +19,12 @@ const evaluateArray = (arr) => {
 }
 
 const deleteMessage = (message, regex, word, isDone) => {
-	if(!isDone) {
+	// console.log(isDone.value == 0)
+	if(isDone.value == 0) {
 		if(evaluateArray(checkText(message.cleanContent, null, regex, word))) {
 			message.delete().then(msg => {console.log(`Deleted message from ${msg.author.username}`)})
 			.catch(console.error);
+			isDone.value += 1
 		}
 	}	
 }
@@ -41,12 +43,12 @@ const runBot = () => {
 
 	client.on(Events.MessageCreate, message => {
 		console.log(`Recieved message: ${message.cleanContent} from ${message.author}`)
-		let done = 0
+		let done = { value: 0 }
 		bannedWords.forEach(bannedWord => {
 			bannedRegexes.forEach(bannedRegex => {
 				// console.log(evaluateArray(checkText(message.cleanContent, null, bannedRegex, bannedWord)))
 				deleteMessage(message, bannedRegex, bannedWord, done)
-				done++;
+				// done++;
 			})
 		})
 		
