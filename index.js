@@ -3,9 +3,9 @@ const { Client, Events, GatewayIntentBits } = require('discord.js')
 const { checkText } = require('./checkText')
 
 const bannedWords = [
-	"skill", "issue", "jeba", "kurw", "szmat", "chuj", "pizd"
+	"skill", "issue", "jeb*", "kurw*", "szmat", "chuj*", "pizd*", "skil", "isue"
 ]
-const bannedRegexes = [
+const bannedRegexes = [ // array of banned regexes for the bot
 	/.*kurw.*/i,
 	/.*jeb.*/i,
 	/.*szmat.*/i,
@@ -17,7 +17,7 @@ const bannedRegexes = [
 	/.*i{1,5}s{1,5}u{1,5}e{1,5}.*/i,
 ]
 
-const evaluateArray = (arr) => { // deprecated
+const evaluateArray = (arr) => { // DEPRECATED
 	if(arr.length) {
 		for(let i = 0; i < arr.length; arr++) {
 			if(arr[i]) {
@@ -41,9 +41,9 @@ const checkMessage = (message) => {
 		})
 }
 
-const deleteMessage = (message, regex, word, isDone) => {
+const deleteMessage = (message, regex, word, isDone) => { // deletes a message
 	// console.log(isDone.value == 0)
-	if(isDone.value == 0) {
+	if(isDone.value == 0) { // check if action has already been done
 		let checkedArrayResult = checkText(message.cleanContent, null, regex, word)
 		// console.log(checkedArrayResult)
 		if(checkedArrayResult) {
@@ -85,17 +85,3 @@ const runBot = () => {
 }
 
 runBot()
-
-// evalWord = evaluateArray(checkText("s k i l i s s u e", null, /(.*skil.*)/ig, "skill"))
-
-testEval = (message) => {
-	bannedWords.forEach(bannedWord => {
-		bannedRegexes.forEach(bannedRegex => {
-			console.log(evaluateArray(checkText(message, null, bannedRegex, bannedWord)))
-		})
-	})
-}
-
-// testEval("asdf ")
-
-// console.log(evalWord)

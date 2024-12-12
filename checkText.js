@@ -21,11 +21,10 @@ const checkText = (str, images, regex, text) => {
 
         if (words) {
             words.push(str.replace(/\s/g, ""))
-            // console.log(words)
             words.forEach(word => {
-                // console.log(word)
-                // console.log(regex.toString())
-                returnValue.push(evaluateTextSimilarity(new TextCheckReturnObject(checkStringSimilarity(word.replace(/[\u{0080}-\u{FFFF}]/gu,""), text), word.match(regex)), word))
+                if(word.length > 2) {
+                    returnValue.push(evaluateTextSimilarity(new TextCheckReturnObject(checkStringSimilarity(word.replace(/[\u{0080}-\u{FFFF}]/gu,""), text), word.match(regex)), word))
+                }
             });
             return returnValue
         }
@@ -33,10 +32,7 @@ const checkText = (str, images, regex, text) => {
 }
 
 const evaluateTextSimilarity = (returnObject) => {
-    // console.log("for " + returnObject.word_debug)
-    // console.log("regex match: " + returnObject.regex_match)
     if(returnObject.lev_number < 3 || returnObject.regex_match) {
-        // console.log("returned true")
         return true
     }
     else { return false }
